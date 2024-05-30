@@ -1,7 +1,6 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = (env) => {
@@ -35,20 +34,6 @@ module.exports = (env) => {
           },
         },
         {
-          test: /\.css$/,
-          // exclude: /node_modules/,
-          use: [
-            production ? MiniCssExtractPlugin.loader : 'style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                sourceMap: !production,
-              },
-            },
-          ],
-        },
-        {
           test: /\.(png|jpe?g|gif|svg)$/i,
           type: 'asset/resource',
           parser: {
@@ -74,9 +59,6 @@ module.exports = (env) => {
         title: 'NoiseRoom',
         template: './src/index.html',
         // favicon: '.',
-      }),
-      new MiniCssExtractPlugin({
-        filename: production ? '[name].[contenthash].css' : '[name].css',
       }),
     ],
 
