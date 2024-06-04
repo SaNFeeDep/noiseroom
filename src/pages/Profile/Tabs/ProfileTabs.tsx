@@ -8,13 +8,13 @@ type ExtendsITab = ITab & {
 
 export const profileTabs: ExtendsITab[] = [
   {
-    tabId: 'personalInfo',
-    title: 'персональные данные',
-    element: <PersonalInfo />,
-  },
-  {
     tabId: 'equipment',
     title: 'брони',
     element: <Equipment />,
+  },
+  {
+    tabId: 'personalInfo',
+    title: 'персональные данные',
+    element: <PersonalInfo />,
   },
 ]

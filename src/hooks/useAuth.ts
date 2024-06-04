@@ -7,10 +7,12 @@ const KEY_NAME = 'auth_key'
  *
  * @returns
  */
-export const useAuth = () => {
+const useAuth = () => {
   const login = (key: string) => cookie.set(KEY_NAME, key)
   const logout = () => cookie.delete(KEY_NAME)
   const isLogin = () => cookie.get(KEY_NAME)
 
   return { login, logout, isLogin }
 }
+
+export default useAuth
