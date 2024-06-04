@@ -1,5 +1,4 @@
 import { CSSObject } from 'styled-components'
-import { onChangeEventType } from '../../../hooks'
 
 export type ICalendarMonthType = 'prev' | 'current' | 'next'
 
@@ -14,29 +13,9 @@ export interface ICalendar {
   sx?: CSSObject
 
   /**
-   * Минимальная дата
-   */
-  minDate?: DateISOString
-
-  /**
-   * Максимальная дата
-   */
-  maxDate?: DateISOString
-
-  /**
    * Значение
    */
   value?: string
-
-  /**
-   * Отключение года
-   */
-  isYearDisabled?: boolean
-
-  /**
-   * Часы минуты
-   */
-  isTimeSelector?: boolean
 
   /**
    * Изменение месяца/года по скроллу колесеком
@@ -46,9 +25,7 @@ export interface ICalendar {
   /**
    * Изменения
    */
-  onChange?: (
-    event: onChangeEventType<string> & { target: { ignore?: boolean } }
-  ) => void
+  onChange?: (event: string) => void
 }
 
 export interface ICalendarDays {

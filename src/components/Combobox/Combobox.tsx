@@ -1,6 +1,7 @@
 import { useId, useMemo, useRef, useState } from 'react'
 import styled, { CSSObject } from 'styled-components'
 import { useOnClickOutside } from '../../hooks'
+import { svgIcons } from '../../constants'
 
 export type ComboboxData<T extends string | number = string> = {
   text: string
@@ -66,7 +67,7 @@ const Combobox = <T extends string | number>({
         <InnerContainer>
           <Text>{currentText}</Text>
           <Icon className={open ? 'openned' : ''} onClick={onToggleHandler}>
-            <img src='./images/arrow.svg' />
+            {svgIcons.arrow}
           </Icon>
         </InnerContainer>
 
@@ -133,7 +134,7 @@ const Icon = styled.div`
   transform: rotate(0deg);
   transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
 
-  & img {
+  & svg {
     width: 12px;
     height: 12px;
   }
@@ -152,8 +153,9 @@ const List = styled.ul<{ listHeight: number }>`
   box-shadow: rgba(0, 0, 0, 0.173) 0px 1px 2px;
   background-color: #d9d9d9;
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
   height: 0px;
+  z-index: 999;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55) 0s;
 
   &.opened {
     height: ${({ listHeight }) => listHeight}px;

@@ -40,6 +40,7 @@ const StyledButton = styled.button<{ active?: boolean; sx?: CSSObject }>`
   cursor: pointer;
   transition: 0.1s linear all;
   backdrop-filter: blur(10px);
+  user-select: none;
 
   ${({ active }) => {
     if (active) {

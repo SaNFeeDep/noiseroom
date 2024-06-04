@@ -26,12 +26,11 @@ const getAnimationProps = (direction: ICalendarAnimDirection) =>
     '': { enter: '', active: '', exit: '' },
   }[direction])
 
-export const Container = styled.div<{ expanded: boolean; sxStyle?: CSSObject }>`
-  width: 155px;
-  height: ${({ expanded }) => (expanded ? '200' : '175')}px;
+export const Container = styled.div<{ sxStyle?: CSSObject }>`
+  width: 380px;
+  height: 280px;
   overflow: hidden;
-  background-color: #fff;
-  border: 1px solid ${({ theme }) => theme.colors.focus};
+  background-color: #00000070;
 
   ${({ sxStyle }) => sxStyle}
 `
@@ -43,9 +42,6 @@ export const Header = styled.div`
   justify-content: space-around;
   align-items: center;
   user-select: none;
-
-  border-bottom: 1px solid ${({ theme }) => theme.colors.focus};
-  background-color: ${({ theme }) => theme.colors.default};
 `
 
 export const HeaderBox = styled.div`
@@ -64,9 +60,6 @@ export const HeaderBox = styled.div`
 export const Month = styled.span`
   width: 52px;
 `
-export const Year = styled.span`
-  width: 30px;
-`
 
 export const Controller = styled.div<{ isPrev?: boolean }>`
   width: 15px;
@@ -83,6 +76,8 @@ export const Controller = styled.div<{ isPrev?: boolean }>`
   }
 
   & > svg {
+    width: 10px;
+    height: 10px;
     fill: #d3d3d3;
     transition: fill 0.2s ease;
     transform: ${({ isPrev }) => (isPrev ? 'rotate(90deg)' : 'rotate(-90deg)')};
@@ -91,13 +86,12 @@ export const Controller = styled.div<{ isPrev?: boolean }>`
 
 export const DaysWeek = styled.div`
   user-select: none;
+  display: grid;
+  column-gap: 28px;
   height: 19px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 6px;
-  background-color: ${({ theme }) => theme.colors.footerBackground};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gridBoder};
+  padding: 0 22px;
+  grid-template-columns: repeat(7, 24px);
+  text-align: center;
 
   & span {
     width: 14px;
@@ -115,10 +109,12 @@ export const DaysWrapperOverflow = styled.div`
 export const DaysWrapper = styled.div<{
   animationDirection: ICalendarAnimDirection
 }>`
-  padding: 5px 0 5px 6px;
-  display: grid;
   width: 100%;
-  grid-template-columns: repeat(auto-fill, 20px);
+  grid-template-columns: repeat(7, 24px);
+  row-gap: 14px;
+  column-gap: 28px;
+  padding: 12px 22px;
+  display: grid;
 
   ${({ animationDirection }) => {
     if (animationDirection !== '') {
@@ -152,48 +148,28 @@ export const DaysWrapper = styled.div<{
 `
 
 export const Day = styled.div<{
-  selected?: boolean
-  isDisabled?: boolean
   notCurrent?: boolean
 }>`
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   display: block;
   text-align: center;
   cursor: pointer;
   user-select: none;
-  line-height: 20px;
+  line-height: 24px;
   padding-left: 1px;
   transition: all 0.1s ease-out;
 
-  ${({ isDisabled, selected }) => {
-    if (isDisabled) {
-      return css`
-        cursor: default;
-        background-color: ${({ theme }) => theme.colors.disabledDay};
-        color: ${({ theme }) => theme.colors.disabledDayText};
-      `
-    } else {
-      if (selected) {
-        return css`
-          background-color: ${({ theme }) => theme.colors.default};
-          color: #fff;
-        `
-      } else {
-        return css`
-          &:hover {
-            background-color: ${({ theme }) => theme.colors.default};
-            color: #fff;
-          }
-        `
-      }
-    }
-  }}
+  &.selected,
+  &:hover {
+    background-color: #7a098a;
+    color: #fff;
+  }
 
   ${({ notCurrent }) => {
     if (notCurrent) {
       return css`
-        color: ${({ theme }) => theme.colors.labelColor};
+        color: #616161;
       `
     }
   }}
