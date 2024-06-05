@@ -1,17 +1,7 @@
 import styled, { css } from 'styled-components'
+import { ITabPanelProps } from './ITabPanel'
 
-export type ITab = {
-  tabId: string
-  title: string
-}
-
-type IProps = {
-  tabs: ITab[]
-  tabId: string
-  onChange: (tabId: string) => void
-}
-
-const TabPanel: React.FC<IProps> = ({ tabId, tabs, onChange }) => {
+const TabPanel: React.FC<ITabPanelProps> = ({ tabId, tabs, onChange }) => {
   return (
     <TabWrapper>
       {tabs.map((tab) => (

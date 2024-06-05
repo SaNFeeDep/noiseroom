@@ -12,6 +12,7 @@ import {
   Header,
   HeaderBox,
   WeekNumber,
+  Wrapper,
 } from './SCalendar'
 
 import { svgIcons } from '../../constants'
@@ -217,40 +218,42 @@ const Calendar: React.FC<ICalendar> = ({
   const visibleMonth = (currentMonth + 1).toString().padStart(2, '0')
 
   return (
-    <Container sxStyle={sx}>
-      <Header>
-        <HeaderBox>{monthNames[currentMonth]}</HeaderBox>
-      </Header>
+    <Wrapper>
+      <Container sxStyle={sx}>
+        <Header>
+          <HeaderBox>{monthNames[currentMonth]}</HeaderBox>
+        </Header>
 
-      <DaysWeek>
-        <div className='month'>{visibleMonth}</div>
+        <DaysWeek>
+          <div className='month'>{visibleMonth}</div>
 
-        {shortDaysWeek.map((day) => (
-          <div key={day + id}>{day}</div>
-        ))}
-      </DaysWeek>
+          {shortDaysWeek.map((day) => (
+            <div key={day + id}>{day}</div>
+          ))}
+        </DaysWeek>
 
-      <DaysWrapperOverflow>
-        <Controller isPrev onClick={() => onClickMonthHandler('prev')}>
-          {svgIcons.arrow}
-        </Controller>
+        <DaysWrapperOverflow>
+          <Controller isPrev onClick={() => onClickMonthHandler('prev')}>
+            {svgIcons.arrow}
+          </Controller>
 
-        <SwitchTransition mode='out-in'>
-          <CSSTransition
-            key={String(animTrigger)}
-            timeout={200}
-            classNames='fade'>
-            <DaysWrapper animationDirection={animDir}>
-              {renderDays()}
-            </DaysWrapper>
-          </CSSTransition>
-        </SwitchTransition>
+          <SwitchTransition mode='out-in'>
+            <CSSTransition
+              key={String(animTrigger)}
+              timeout={200}
+              classNames='fade'>
+              <DaysWrapper animationDirection={animDir}>
+                {renderDays()}
+              </DaysWrapper>
+            </CSSTransition>
+          </SwitchTransition>
 
-        <Controller onClick={() => onClickMonthHandler('next')}>
-          {svgIcons.arrow}
-        </Controller>
-      </DaysWrapperOverflow>
-    </Container>
+          <Controller onClick={() => onClickMonthHandler('next')}>
+            {svgIcons.arrow}
+          </Controller>
+        </DaysWrapperOverflow>
+      </Container>
+    </Wrapper>
   )
 }
 

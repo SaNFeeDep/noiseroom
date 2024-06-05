@@ -26,11 +26,15 @@ const getAnimationProps = (direction: ICalendarAnimDirection) =>
     '': { enter: '', active: '', exit: '' },
   }[direction])
 
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 export const Container = styled.div<{ sxStyle?: CSSObject }>`
   width: 420px;
   height: 300px;
   overflow: hidden;
-  background-color: #00000070;
 
   ${({ sxStyle }) => sxStyle}
 `
@@ -174,6 +178,7 @@ export const Day = styled.div`
   line-height: 24px;
   padding-left: 1px;
   transition: all 0.1s ease-out;
+  border-radius: 5px;
 
   &.week-end {
     color: #2fa4c8;

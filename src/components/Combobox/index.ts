@@ -1,4 +1,5 @@
-import Combobox, { ComboboxData } from './Combobox'
+import Combobox from './Combobox'
+import { ComboboxData } from './ICombobox'
 
 export { type ComboboxData }
 

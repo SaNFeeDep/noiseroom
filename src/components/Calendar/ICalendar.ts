@@ -18,7 +18,7 @@ export interface ICalendar {
   /**
    * Изменения
    */
-  onChange?: (event: string) => void
+  onChange?: (value: string) => void
 }
 
 export interface ICalendarDays {
