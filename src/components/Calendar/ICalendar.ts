@@ -5,8 +5,6 @@ export type ICalendarMonthType = 'prev' | 'current' | 'next'
 export type ICalendarAnimDirection = 'left' | 'right' | 'top' | 'bottom' | ''
 
 export interface ICalendar {
-  name: string
-
   /**
    * Стили
    */
@@ -16,11 +14,6 @@ export interface ICalendar {
    * Значение
    */
   value?: string
-
-  /**
-   * Изменение месяца/года по скроллу колесеком
-   */
-  isScollChange?: boolean
 
   /**
    * Изменения

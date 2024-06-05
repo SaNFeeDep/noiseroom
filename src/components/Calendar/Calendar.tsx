@@ -11,7 +11,7 @@ import {
   DaysWrapperOverflow,
   Header,
   HeaderBox,
-  Month,
+  WeekNumber,
 } from './SCalendar'
 
 import { svgIcons } from '../../constants'
@@ -21,6 +21,8 @@ import {
   ICalendarDays,
   ICalendarMonthType,
 } from './ICalendar'
+import { classHelper } from '../../utils/classHelper'
+import { getWeekNumber } from '../../utils/getWeekNumber'
 
 type ClickType = 'prev' | 'next'
 
@@ -49,7 +51,6 @@ const monthNames = [
 const Calendar: React.FC<ICalendar> = ({
   sx,
   value = '',
-  isScollChange = true,
   onChange = () => {},
 }) => {
   const id = useId()
@@ -171,65 +172,83 @@ const Calendar: React.FC<ICalendar> = ({
     }
   }
 
-  /**
-   * Скролл месяца
-   *
-   * @param param0
-   * @param type
-   * @returns
-   */
-  const onWheelHandler = ({ deltaY }: React.WheelEvent) => {
-    if (!isScollChange) return
+  const renderDays = () => {
+    let lastWeekNubmer = 0
 
-    deltaY < 0 ? onClickMonthHandler('prev') : onClickMonthHandler('next')
+    return calendarDays.map(({ day, time, disabled, type }) => {
+      const timeDay = time.getDay()
+      const weekNumber = getWeekNumber(time)
+
+      const isSelected = time.toDateString() === stateDate.toDateString()
+
+      const isWeekEnds = timeDay === 0 || timeDay === 6
+
+      const dayClassNames = classHelper({
+        selected: isSelected,
+        'week-end': isWeekEnds,
+        'not-current': disabled,
+      })
+
+      const weekNumberContent = <WeekNumber>{weekNumber}</WeekNumber>
+
+      const dayContent = (
+        <Day
+          className={dayClassNames}
+          key={id + time.toString()}
+          onClick={() => onChangeDateHandler(type, time)}>
+          {day}
+        </Day>
+      )
+
+      if (weekNumber !== lastWeekNubmer) {
+        lastWeekNubmer = weekNumber
+        return (
+          <>
+            {weekNumberContent} {dayContent}
+          </>
+        )
+      }
+
+      return dayContent
+    })
   }
+
+  const currentMonth = stateDate.getMonth()
+  const visibleMonth = (currentMonth + 1).toString().padStart(2, '0')
 
   return (
     <Container sxStyle={sx}>
       <Header>
-        <HeaderBox onWheel={onWheelHandler}>
-          <Controller isPrev onClick={() => onClickMonthHandler('prev')}>
-            {svgIcons.arrow}
-          </Controller>
-
-          <Month>{monthNames[stateDate.getMonth()]}</Month>
-
-          <Controller onClick={() => onClickMonthHandler('next')}>
-            {svgIcons.arrow}
-          </Controller>
-        </HeaderBox>
+        <HeaderBox>{monthNames[currentMonth]}</HeaderBox>
       </Header>
 
       <DaysWeek>
+        <div className='month'>{visibleMonth}</div>
+
         {shortDaysWeek.map((day) => (
           <div key={day + id}>{day}</div>
         ))}
       </DaysWeek>
 
       <DaysWrapperOverflow>
+        <Controller isPrev onClick={() => onClickMonthHandler('prev')}>
+          {svgIcons.arrow}
+        </Controller>
+
         <SwitchTransition mode='out-in'>
           <CSSTransition
             key={String(animTrigger)}
             timeout={200}
             classNames='fade'>
             <DaysWrapper animationDirection={animDir}>
-              {calendarDays.map(({ day, disabled, type, time }) => {
-                const isSelected =
-                  time.toDateString() === stateDate.toDateString()
-
-                return (
-                  <Day
-                    className={isSelected ? 'selected' : ''}
-                    key={id + time.toString()}
-                    notCurrent={disabled}
-                    onClick={() => onChangeDateHandler(type, time)}>
-                    {day}
-                  </Day>
-                )
-              })}
+              {renderDays()}
             </DaysWrapper>
           </CSSTransition>
         </SwitchTransition>
+
+        <Controller onClick={() => onClickMonthHandler('next')}>
+          {svgIcons.arrow}
+        </Controller>
       </DaysWrapperOverflow>
     </Container>
   )

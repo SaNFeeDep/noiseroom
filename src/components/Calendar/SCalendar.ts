@@ -27,8 +27,8 @@ const getAnimationProps = (direction: ICalendarAnimDirection) =>
   }[direction])
 
 export const Container = styled.div<{ sxStyle?: CSSObject }>`
-  width: 380px;
-  height: 280px;
+  width: 420px;
+  height: 300px;
   overflow: hidden;
   background-color: #00000070;
 
@@ -37,6 +37,7 @@ export const Container = styled.div<{ sxStyle?: CSSObject }>`
 
 export const Header = styled.div`
   height: 24px;
+  margin: 10px 0;
   display: flex;
   color: #fff;
   justify-content: space-around;
@@ -48,6 +49,9 @@ export const HeaderBox = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #7a098a;
+  padding: 2px 8px;
+  border-radius: 4px;
 
   & span {
     display: flex;
@@ -57,13 +61,10 @@ export const HeaderBox = styled.div`
     height: 100%;
   }
 `
-export const Month = styled.span`
-  width: 52px;
-`
 
 export const Controller = styled.div<{ isPrev?: boolean }>`
-  width: 15px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,8 +77,8 @@ export const Controller = styled.div<{ isPrev?: boolean }>`
   }
 
   & > svg {
-    width: 10px;
-    height: 10px;
+    width: 20px;
+    height: 20px;
     fill: #d3d3d3;
     transition: fill 0.2s ease;
     transform: ${({ isPrev }) => (isPrev ? 'rotate(90deg)' : 'rotate(-90deg)')};
@@ -87,11 +88,17 @@ export const Controller = styled.div<{ isPrev?: boolean }>`
 export const DaysWeek = styled.div`
   user-select: none;
   display: grid;
-  column-gap: 28px;
+  column-gap: 20px;
   height: 19px;
-  padding: 0 22px;
-  grid-template-columns: repeat(7, 24px);
+  padding: 0 41px;
+  grid-template-columns: repeat(8, 24px);
   text-align: center;
+  color: #b3b3b3;
+
+  & .month {
+    width: 22px;
+    font-weight: 200;
+  }
 
   & span {
     width: 14px;
@@ -104,15 +111,20 @@ export const DaysWeek = styled.div`
 
 export const DaysWrapperOverflow = styled.div`
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  user-select: none;
 `
 
 export const DaysWrapper = styled.div<{
   animationDirection: ICalendarAnimDirection
 }>`
   width: 100%;
-  grid-template-columns: repeat(7, 24px);
+  grid-template-columns: repeat(8, 24px);
   row-gap: 14px;
-  column-gap: 28px;
+  column-gap: 20px;
   padding: 12px 22px;
   display: grid;
 
@@ -147,9 +159,12 @@ export const DaysWrapper = styled.div<{
   }}
 `
 
-export const Day = styled.div<{
-  notCurrent?: boolean
-}>`
+export const WeekNumber = styled.div`
+  font-weight: 200;
+  color: #b3b3b3;
+`
+
+export const Day = styled.div`
   width: 24px;
   height: 24px;
   display: block;
@@ -160,17 +175,21 @@ export const Day = styled.div<{
   padding-left: 1px;
   transition: all 0.1s ease-out;
 
-  &.selected,
-  &:hover {
+  &.week-end {
+    color: #2fa4c8;
+  }
+
+  &.week-end.not-current {
+    color: #2c6eab;
+  }
+
+  &.not-current {
+    color: #616161;
+  }
+
+  &.selected:not(.not-current),
+  &:hover:not(.not-current) {
     background-color: #7a098a;
     color: #fff;
   }
-
-  ${({ notCurrent }) => {
-    if (notCurrent) {
-      return css`
-        color: #616161;
-      `
-    }
-  }}
 `
