@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import RoutesPaths from './enums/routesPaths'
-import { Booking, Profile, Equipment, Contacts, Price, Rules } from './pages'
+import { Booking, Profile, Equipment, Contacts, Price } from './pages'
 import Registration from './pages/Registration'
 
 export type RoutesArrayType = {
@@ -34,10 +34,6 @@ const RoutesArray: RoutesArrayType[] = [
   {
     path: RoutesPaths.PRICE,
     element: <Price />,
-  },
-  {
-    path: RoutesPaths.RULES,
-    element: <Rules />,
   },
   {
     path: RoutesPaths.REGISTRATION,

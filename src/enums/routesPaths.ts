@@ -6,7 +6,6 @@ enum RoutesPaths {
   EQUIPMENT = 'equipment',
   PROFILE = 'profile',
   PRICE = 'price',
-  RULES = 'rules',
   REGISTRATION = 'registration',
 }
 
